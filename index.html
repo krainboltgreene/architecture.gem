@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Architect by krainboltgreene</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/krainboltgreene/architect">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Architect</h1>
+            <h2>Architect is a library for scaffolding methods</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/krainboltgreene/architect/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/krainboltgreene/architect/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <ul>
+<li><a href="https://rubygems.org/gems/architect"><img src="https://badge.fury.io/rb/architect.png" alt="Gem Version"></a></li>
+<li><a href="https://codeclimate.com/github/krainboltgreene/architect"><img src="https://codeclimate.com/github/krainboltgreene/architect.png" alt="Code Climate"></a></li>
+<li><a href="https://travis-ci.org/krainboltgreene/architect"><img src="https://travis-ci.org/krainboltgreene/architect.png" alt="Build Status"></a></li>
+<li><a href="https://gemnasium.com/krainboltgreene/architect"><img src="https://gemnasium.com/krainboltgreene/architect.png" alt="Dependency Status"></a></li>
+<li><a href="https://coveralls.io/r/krainboltgreene/architect"><img src="https://coveralls.io/repos/krainboltgreene/architect/badge.png?branch=master" alt="Coverage Status"></a></li>
+</ul><p>Architect is a library that makes scaffolding and file manipulation easy.
+It gives you quite a few methods for doing things like:</p>
+
+<ul>
+<li>Creating, copying, &amp; rendering files</li>
+<li>Creating &amp; copying directories</li>
+<li>Installing gems, running system commands, interacting with vcs</li>
+<li>Verifying things worked</li>
+</ul><p>Architect's main goal is to become the library of choice for gems like rake
+and thor.</p>
+
+<h1>Using Architect</h1>
+
+<p>You can include architect modules into a class like so:</p>
+
+<div class="highlight"><pre><span class="nb">require</span> <span class="s2">"architect"</span>
+
+<span class="k">class</span> <span class="nc">MakeProjectCommand</span>
+  <span class="kp">include</span> <span class="ss">Architect</span><span class="p">:</span><span class="ss">:Core</span>
+
+  <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="n">create_directory</span> <span class="nb">name</span> <span class="k">do</span>
+      <span class="n">copy_file</span> <span class="s2">"Gemfile"</span><span class="p">,</span> <span class="ss">version</span><span class="p">:</span> <span class="ss">Rails</span><span class="p">:</span><span class="ss">:VERSION</span>
+      <span class="n">create_directory</span> <span class="s2">"app"</span> <span class="k">do</span>
+        <span class="n">create_directory</span> <span class="s2">"models"</span>
+        <span class="n">create_directory</span> <span class="s2">"controllers"</span>
+        <span class="n">create_directory</span> <span class="s2">"views"</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>or you can simply have them accessible in <code>main</code> (sinatra style):</p>
+
+<div class="highlight"><pre><span class="nb">require</span> <span class="s2">"architect"</span>
+
+<span class="nb">puts</span> <span class="s2">"What is your project name?"</span>
+<span class="nb">name</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">chomp</span>
+
+<span class="n">create_directory</span> <span class="nb">name</span> <span class="k">do</span>
+  <span class="n">copy_file</span> <span class="s2">"Gemfile"</span><span class="p">,</span> <span class="ss">version</span><span class="p">:</span> <span class="ss">Rails</span><span class="p">:</span><span class="ss">:VERSION</span>
+  <span class="n">create_directory</span> <span class="s2">"app"</span> <span class="k">do</span>
+    <span class="n">create_directory</span> <span class="s2">"models"</span>
+    <span class="n">create_directory</span> <span class="s2">"controllers"</span>
+    <span class="n">create_directory</span> <span class="s2">"views"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>The <code>Gemfile</code> file would look like this:</p>
+
+<div class="highlight"><pre><span class="c1"># source/Gemfile</span>
+<span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
+
+<span class="n">gem</span> <span class="s2">"rails"</span><span class="p">,</span> <span class="s2">"~&gt; &lt;%= version %&gt;"</span>
+</pre></div>
+
+<p>We run Erubius over each project which you can provide data to if you pass in a <code>Hash</code> or any object that responds to methods called in the file.</p>
+
+<h1>Installing Architect</h1>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'architect'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install architect
+</code></pre>
+
+<h1>Contributing</h1>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/krainboltgreene">krainboltgreene</a> can be found on <a href="https://github.com/krainboltgreene/architect">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
