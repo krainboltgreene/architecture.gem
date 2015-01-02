@@ -1,3 +1,3 @@
-module Blankgem
+module Architecture
   VERSION = "1.0.0"
 end
