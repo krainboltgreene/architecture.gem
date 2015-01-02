@@ -10,10 +10,10 @@ module Architecture
     end
 
     def call
-      if context.any? && entity.file?
+      if origin.file? && context.any?
         clone.write(text: data)
       else
-        `cp #{origin.location} #{clone.location}`
+        origin.copy(entity: clone)
       end
     end
 

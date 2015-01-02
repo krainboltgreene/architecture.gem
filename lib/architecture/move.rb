@@ -8,7 +8,7 @@ module Architecture
     end
 
     def call
-      `mv #{origin.location} #{clone.location}`
+      origin.move(entity: clone)
     end
   end
 end

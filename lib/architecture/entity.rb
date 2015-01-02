@@ -20,6 +20,18 @@ module Architecture
       ::File.write(location, text)
     end
 
+    def copy(entity:)
+      system("cp #{location} #{entity.location}")
+    end
+
+    def delete
+      system("rm -rf #{location}")
+    end
+
+    def move(entity:)
+      system("mv #{location} #{entity.location}")
+    end
+
     private def path
       @path
     end
@@ -33,7 +45,11 @@ module Architecture
     end
 
     private def type
-      `file --mime-type --brief #{location}`
+      system("file --mime-type --brief #{location}")
+    end
+
+    private def system(command)
+      `#{command}`
     end
   end
 end
