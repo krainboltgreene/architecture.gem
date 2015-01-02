@@ -7,7 +7,7 @@ module Architecture
     end
 
     def call
-      `rm -rf #{entity.location}`
+      entity.delete
     end
   end
 end
