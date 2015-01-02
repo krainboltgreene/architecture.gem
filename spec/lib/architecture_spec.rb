@@ -1,5 +1,5 @@
 require "spec_helper"
 
-describe Blankgem do
+describe Architecture do
 
 end
