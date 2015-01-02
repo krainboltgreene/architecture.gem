@@ -1,25 +1,83 @@
-blankgem
---------
+architecture
+------------
 
-  - [![Quality](http://img.shields.io/codeclimate/github/krainboltgreene/blankgem.gem.svg?style=flat-square)](https://codeclimate.com/github/krainboltgreene/blankgem.gem)
-  - [![Coverage](http://img.shields.io/codeclimate/coverage/github/krainboltgreene/blankgem.gem.svg?style=flat-square)](https://codeclimate.com/github/krainboltgreene/blankgem.gem)
-  - [![Build](http://img.shields.io/travis-ci/krainboltgreene/blankgem.gem.svg?style=flat-square)](https://travis-ci.org/krainboltgreene/blankgem.gem)
-  - [![Dependencies](http://img.shields.io/gemnasium/krainboltgreene/blankgem.gem.svg?style=flat-square)](https://gemnasium.com/krainboltgreene/blankgem.gem)
-  - [![Downloads](http://img.shields.io/gem/dtv/blankgem.svg?style=flat-square)](https://rubygems.org/gems/blankgem)
-  - [![Tags](http://img.shields.io/github/tag/krainboltgreene/blankgem.gem.svg?style=flat-square)](http://github.com/krainboltgreene/blankgem.gem/tags)
-  - [![Releases](http://img.shields.io/github/release/krainboltgreene/blankgem.gem.svg?style=flat-square)](http://github.com/krainboltgreene/blankgem.gem/releases)
-  - [![Issues](http://img.shields.io/github/issues/krainboltgreene/blankgem.gem.svg?style=flat-square)](http://github.com/krainboltgreene/blankgem.gem/issues)
+  - [![Quality](http://img.shields.io/codeclimate/github/krainboltgreene/architecture.gem.svg?style=flat-square)](https://codeclimate.com/github/krainboltgreene/architecture.gem)
+  - [![Coverage](http://img.shields.io/codeclimate/coverage/github/krainboltgreene/architecture.gem.svg?style=flat-square)](https://codeclimate.com/github/krainboltgreene/architecture.gem)
+  - [![Build](http://img.shields.io/travis-ci/krainboltgreene/architecture.gem.svg?style=flat-square)](https://travis-ci.org/krainboltgreene/architecture.gem)
+  - [![Dependencies](http://img.shields.io/gemnasium/krainboltgreene/architecture.gem.svg?style=flat-square)](https://gemnasium.com/krainboltgreene/architecture.gem)
+  - [![Downloads](http://img.shields.io/gem/dtv/architecture.svg?style=flat-square)](https://rubygems.org/gems/architecture)
+  - [![Tags](http://img.shields.io/github/tag/krainboltgreene/architecture.gem.svg?style=flat-square)](http://github.com/krainboltgreene/architecture.gem/tags)
+  - [![Releases](http://img.shields.io/github/release/krainboltgreene/architecture.gem.svg?style=flat-square)](http://github.com/krainboltgreene/architecture.gem/releases)
+  - [![Issues](http://img.shields.io/github/issues/krainboltgreene/architecture.gem.svg?style=flat-square)](http://github.com/krainboltgreene/architecture.gem/issues)
   - [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)
-  - [![Version](http://img.shields.io/gem/v/blankgem.svg?style=flat-square)](https://rubygems.org/gems/blankgem)
+  - [![Version](http://img.shields.io/gem/v/architecture.svg?style=flat-square)](https://rubygems.org/gems/architecture)
 
 
-TODO: Write a gem description
+Architecture is a library that makes scaffolding and file manipulation easy. It gives you a programatic interface and DSL for creating, copying, moving, "rendering", & deleting files and directories.
+
+Architecture's main goal is to become the library of choice for gems like rake
+and thor.
 
 
 Using
 =====
 
-TODO: Write usage instructions here
+Using the DSL you can:
+
+``` ruby
+require "architecture/dsl"
+
+architecture source: "old", destination: "new"  do
+  # Copy a file or directory:
+  copy name: "README.md"
+
+  # Rename a copied file or directory:
+  copy name: "LICENSE", as: "COPYRIGHT"
+
+  # Render a file:
+  # - old/applicaiton.rb
+  # module {{module}}
+  #
+  # end
+  copy name: "application.rb", context: { module: "Foobar" }
+  # - new/application.rb
+  # module Foobar
+  #
+  # end
+
+  # Delete a file or directory:
+  delete path: "app.rb"
+
+  # Create a file or directory:
+  create path: "application.rb"
+
+  # Anything with the `path` keyword might need scoping:
+  create path: source("application.rb")
+  # - old/application.rb
+
+  delete path: destiantion("app.rb")
+  # - new/app.rb
+
+  # Move a file or directory:
+  move path: destination("application.rb"), as: destination("app.rb")
+  # Write over a file:
+  overwrite source: destination("application.rb"), content: "\n"
+
+  # Append text to a file:
+  append source: destination("application.rb"), content: "end"
+
+  # Prepend text to a file:
+  prepend source: destination("application.rb"), content: "class Foobaz"
+
+  # Replace content in a file:
+  replace source: destination("application.rb"), search: /Foobaz/, content: "Foobar"
+
+  # Change the context of a series of commands:
+  within source: File.join("lib", "foobar") do
+    create name: "version.rb", content: "VERSION = 1.0.0"
+  end
+end
+```
 
 
 Installing
@@ -27,7 +85,7 @@ Installing
 
 Add this line to your application's Gemfile:
 
-    gem "blankgem", "~> 1.0"
+    gem "architecture", "~> 1.0"
 
 And then execute:
 
@@ -35,7 +93,7 @@ And then execute:
 
 Or install it yourself with:
 
-    $ gem install blankgem
+    $ gem install architecture
 
 
 Contributing
@@ -52,7 +110,7 @@ Contributing
 License
 =======
 
-Copyright (c) 2014, 2015 Kurtis Rainbolt-Greene
+Copyright (c) 2015 Kurtis Rainbolt-Greene
 
 MIT License
 
