@@ -17,7 +17,7 @@ module Architecture
       ::Architecture::Move.new(source: path, destination: as).call
     end
 
-    private def create(path:, content:, context: {})
+    private def create(path:, content: nil, context: {})
       ::Architecture::Create.new(source: path, content: content, context: context).call
     end
 
