@@ -27,7 +27,7 @@ RSpec.describe Architecture::Delete do
       call
     end
 
-    it "moves the file" do
+    it "deletes the file" do
       expect(entity).to receive("delete")
     end
   end

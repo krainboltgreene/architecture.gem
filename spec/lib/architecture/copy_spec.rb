@@ -64,7 +64,7 @@ RSpec.describe Architecture::Copy do
           }
         end
 
-        it "creates a file with the rendered content" do
+        it "copies and renders the file" do
           expect(clone).to receive("write").with(text: "bar")
         end
       end

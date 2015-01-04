@@ -24,12 +24,16 @@ module Architecture
       system("cp #{location} #{entity.location}")
     end
 
+    def move(entity:)
+      system("mv #{location} #{entity.location}")
+    end
+
     def delete
       system("rm -rf #{location}")
     end
 
-    def move(entity:)
-      system("mv #{location} #{entity.location}")
+    def create
+      system("mkdir -p #{location}")
     end
 
     private def path
