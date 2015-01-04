@@ -48,8 +48,11 @@ architecture source: "old", destination: "new"  do
   # Delete a file or directory:
   delete path: "app.rb"
 
-  # Create a file or directory:
-  create path: "application.rb"
+  # Create a file:
+  create path: "application.rb", content: "Some text."
+
+  # Create a directory:
+  create path: "lib"
 
   # Anything with the `path` keyword might need scoping:
   create path: source("application.rb")
@@ -60,6 +63,7 @@ architecture source: "old", destination: "new"  do
 
   # Move a file or directory:
   move path: destination("application.rb"), as: destination("app.rb")
+
   # Write over a file:
   overwrite source: destination("application.rb"), content: "\n"
 
@@ -105,6 +109,13 @@ Contributing
   4. Commit your changes (`git commit -am 'Add some feature'`)
   5. Push to the branch (`git push origin my-new-feature`)
   6. Create new Pull Request
+
+
+Changelog
+=========
+
+  - 1.1.0: Adding the Create functionality (woops)
+  - 1.0.0: Initial release
 
 
 License
