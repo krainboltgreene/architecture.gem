@@ -39,45 +39,48 @@ architecture source: "old", destination: "new"  do
   # module {{module}}
   #
   # end
-  copy name: "application.rb", context: { module: "Foobar" }
+  copy name: "app.rb", context: { module: "Foobar" }
   # - new/application.rb
   # module Foobar
   #
   # end
 
   # Delete a file or directory:
-  delete path: "app.rb"
+  delete file: "app.rb"
+  delete directory: "app"
 
   # Create a file:
-  create path: "application.rb", content: "Some text."
+  create file: "app.rb", content: "Some {{foo}}.", context: { foo: "Bar" }
 
   # Create a directory:
-  create path: "lib"
+  create directory: "lib"
 
   # Anything with the `path` keyword might need scoping:
-  create path: source("application.rb")
+  create file: source("app.rb")
   # - old/application.rb
 
-  delete path: destiantion("app.rb")
+  delete file: destiantion("app.rb")
   # - new/app.rb
 
   # Move a file or directory:
-  move path: destination("application.rb"), as: destination("app.rb")
+  move name: destination("app.rb"), as: destination("app.rb")
 
   # Write over a file:
-  overwrite source: destination("application.rb"), content: "\n"
+  overwrite file: destination("app.rb"), content: "\n"
 
   # Append text to a file:
-  append source: destination("application.rb"), content: "end"
+  append file: destination("app.rb"), content: "end"
 
   # Prepend text to a file:
-  prepend source: destination("application.rb"), content: "class Foobaz"
+  prepend file: destination("app.rb"), content: "class Foobaz"
 
   # Replace content in a file:
-  replace source: destination("application.rb"), search: /Foobaz/, content: "Foobar"
+  replace file: destination("app.rb"), search: /Foobaz/, content: "Foobar"
 
   # Change the context of a series of commands:
-  within source: File.join("lib", "foobar") do
+  within source: File.join("lib", "foobar"), destination: File.join("lib", "foozball") do
+    # Now source() returns `"old/lib/foobar"`
+    # Now destination() returns `"new/lib/foozball"`
     create name: "version.rb", content: "VERSION = 1.0.0"
   end
 end
@@ -113,6 +116,7 @@ Contributing
 Changelog
 =========
 
+  - 2.0.0: Cleaned up a lot of the DSL api to make it easier to understand.
   - 1.1.0: Adding the Create functionality (woops)
   - 1.0.0: Initial release
 
