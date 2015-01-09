@@ -17,31 +17,31 @@ module Architecture
       ::Architecture::Move.new(source: path, destination: as).call
     end
 
-    private def create(path:, content: nil, context: {})
-      ::Architecture::Create.new(source: path, content: content, context: context).call
+    private def create(directory: nil, file: nil, content: nil, context: {})
+      ::Architecture::Create.new(source: directory || file, content: content, context: context).call
     end
 
-    private def delete(path:)
-      ::Architecture::Delete.new(source: path).call
+    private def delete(directory: nil, file: nil)
+      ::Architecture::Delete.new(source: directory || file).call
     end
 
-    private def replace(path:, search:, content:)
-      ::Architecture::Replace.new(source: path, search: search, content: content).call
+    private def replace(file: nil, search:, content:)
+      ::Architecture::Replace.new(source: file, search: search, content: content).call
     end
 
-    private def prepend(path:, content:, context: {})
-      ::Architecture::Prepend.new(source: path, content: content, context: context).call
+    private def prepend(file: nil, content:, context: {})
+      ::Architecture::Prepend.new(source: file, content: content, context: context).call
     end
 
-    private def append(path:, content:)
-      ::Architecture::Append.new(source: path, content: content, context: context).call
+    private def append(file: nil, content:)
+      ::Architecture::Append.new(source: file, content: content, context: context).call
     end
 
-    private def overwrite(path:, content:, context: {})
-      ::Architecture::Overwrite.new(source: path, content: content, context: context).call
+    private def overwrite(file: nil, content:, context: {})
+      ::Architecture::Overwrite.new(source: file, content: content, context: context).call
     end
 
-    private def within(path:, &block)
+    private def within(source: nil, destination: nil, &block)
       ::Architecture::DSL.new(source: source(path), destination: destination(path), &block).call
     end
 
