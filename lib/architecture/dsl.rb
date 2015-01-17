@@ -58,7 +58,3 @@ module Architecture
     end
   end
 end
-
-def architecture(source:, destination:, &block)
-  ::Architecture::DSL.new(source: source, destination: destination, &block)
-end
