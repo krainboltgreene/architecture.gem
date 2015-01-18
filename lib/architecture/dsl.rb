@@ -33,7 +33,7 @@ module Architecture
       ::Architecture::Prepend.new(source: file, content: content, context: context).call
     end
 
-    private def append(file: nil, content:)
+    private def append(file: nil, content:, context: {})
       ::Architecture::Append.new(source: file, content: content, context: context).call
     end
 
