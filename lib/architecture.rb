@@ -14,4 +14,8 @@ module Architecture
   require_relative "architecture/prepend"
   require_relative "architecture/replace"
   require_relative "architecture/version"
+
+  private def architecture(source:, destination:, &block)
+    ::Architecture::DSL.new(source: source, destination: destination, &block)
+  end
 end
