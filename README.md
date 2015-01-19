@@ -125,7 +125,7 @@ Contributing
 
 Changelog
 =========
-
+  - 5.2.1: Fixed a bug with `within` DSL.
   - 5.2.0:
     * Finally got around to writing tests for `Entity`
     * Fixed a bug where it was reading from an old ivar
