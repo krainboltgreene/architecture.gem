@@ -42,7 +42,7 @@ module Architecture
     end
 
     def within(source: nil, destination: nil, &block)
-      ::Architecture::DSL.new(source: source(source), destination: destination(destination), &block).call
+      ::Architecture::DSL.new(source: source(source), destination: destination(destination), &block)
     end
 
     def source(path)
