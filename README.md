@@ -117,6 +117,10 @@ Contributing
 Changelog
 =========
 
+  - 5.0.0: Making the private methods public, a fix for when we went to scoped.
+  - 4.0.0: Making each block have a scope object.
+  - 3.0.0: Removing the `architecture` method from `Object`
+  - 2.0.1: Added mustache as a runtime, instead of development dependency
   - 2.0.0: Cleaned up a lot of the DSL api to make it easier to understand.
   - 1.1.0: Adding the Create functionality (woops)
   - 1.0.0: Initial release
