@@ -27,61 +27,61 @@ Using the DSL you can:
 ``` ruby
 require "architecture/dsl"
 
-architecture source: "old", destination: "new"  do
+architecture source: "old", destination: "new"  do |architect|
   # Copy a file or directory:
-  copy name: "README.md"
+  architect.copy name: "README.md"
 
   # Rename a copied file or directory:
-  copy name: "LICENSE", as: "COPYRIGHT"
+  architect.copy name: "LICENSE", as: "COPYRIGHT"
 
   # Render a file:
   # - old/applicaiton.rb
   # module {{module}}
   #
   # end
-  copy name: "app.rb", context: { module: "Foobar" }
+  architect.copy name: "app.rb", context: { module: "Foobar" }
   # - new/application.rb
   # module Foobar
   #
   # end
 
   # Delete a file or directory:
-  delete file: "app.rb"
-  delete directory: "app"
+  architect.delete file: "app.rb"
+  architect.delete directory: "app"
 
   # Create a file:
-  create file: "app.rb", content: "Some {{foo}}.", context: { foo: "Bar" }
+  architect.create file: "app.rb", content: "Some {{foo}}.", context: { foo: "Bar" }
 
   # Create a directory:
-  create directory: "lib"
+  architect.create directory: "lib"
 
-  # Anything with the `path` keyword might need scoping:
-  create file: source("app.rb")
+  # Anything with the `file` or `directory` keyword might need scoping:
+  architect.create file: architect.source("app.rb")
   # - old/application.rb
 
-  delete file: destiantion("app.rb")
+  architect.delete file: architect.destiantion("app.rb")
   # - new/app.rb
 
   # Move a file or directory:
-  move name: destination("app.rb"), as: destination("app.rb")
+  architect.move name: architect.destination("app.rb"), as: architect.destination("app.rb")
 
   # Write over a file:
-  overwrite file: destination("app.rb"), content: "\n"
+  architect.overwrite file: architect.destination("app.rb"), content: "\n"
 
   # Append text to a file:
-  append file: destination("app.rb"), content: "end"
+  architect.append file: architect.destination("app.rb"), content: "end"
 
   # Prepend text to a file:
-  prepend file: destination("app.rb"), content: "class Foobaz"
+  architect.prepend file: architect.destination("app.rb"), content: "class Foobaz"
 
   # Replace content in a file:
-  replace file: destination("app.rb"), search: /Foobaz/, content: "Foobar"
+  architect.replace file: architect.destination("app.rb"), search: /Foobaz/, content: "Foobar"
 
   # Change the context of a series of commands:
-  within source: File.join("lib", "foobar"), destination: File.join("lib", "foozball") do
-    # Now source() returns `"old/lib/foobar"`
-    # Now destination() returns `"new/lib/foozball"`
-    create name: "version.rb", content: "VERSION = 1.0.0"
+  architect.within source: File.join("lib", "foobar"), destination: File.join("lib", "foozball") do |scope|
+    # Now architect.source() returns `"old/lib/foobar"`
+    # Now architect.destination() returns `"new/lib/foozball"`
+    scope.create name: "version.rb", content: "VERSION = 1.0.0"
   end
 end
 ```

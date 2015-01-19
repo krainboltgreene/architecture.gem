@@ -6,7 +6,7 @@ module Architecture
       @source = source
       @destination = destination
 
-      yield
+      yield(self)
     end
 
     private def copy(name:, as: name, context: {})
