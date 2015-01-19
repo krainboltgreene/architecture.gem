@@ -1,11 +1,11 @@
 module Architecture
   class Entity
     def initialize(path:)
-      @path
+      @path = path
     end
 
     def location
-      ::File.expand_path(@location)
+      ::File.expand_path(location)
     end
 
     def content

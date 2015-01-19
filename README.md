@@ -127,6 +127,7 @@ Contributing
 Changelog
 =========
 
+  - 5.1.2: Fixing an issue where path was not set in a Entity.
   - 5.1.1:
     * The `create` dsl method now defaults to as, then file/directory.
     * `move` no longer path scopes the `as:` value.
