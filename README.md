@@ -15,8 +15,7 @@ architecture
 
 Architecture is a library that makes scaffolding and file manipulation easy. It gives you a programatic interface and DSL for creating, copying, moving, "rendering", & deleting files and directories.
 
-Architecture's main goal is to become the library of choice for gems like rake
-and thor.
+Architecture's main goal is to become the library of choice for gems like rake and thor.
 
 
 Using
@@ -127,6 +126,10 @@ Contributing
 Changelog
 =========
 
+  - 5.2.0:
+    * Finally got around to writing tests for `Entity`
+    * Fixed a bug where it was reading from an old ivar
+    * Allowed an engine to be used on an Entity, internally at least
   - 5.1.2: Fixing an issue where path was not set in a Entity.
   - 5.1.1:
     * The `create` dsl method now defaults to as, then file/directory.
