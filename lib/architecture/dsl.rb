@@ -9,12 +9,12 @@ module Architecture
       yield(self)
     end
 
-    def copy(name:, as: name, context: {})
-      ::Architecture::Copy.new(source: source(name), destination: destination(as), context: context).call
+    def copy(file: nil, directory: nil, as: name, context: {})
+      ::Architecture::Copy.new(source: source(directory || file), destination: destination(as), context: context).call
     end
 
-    def move(name:, as:)
-      ::Architecture::Move.new(source: path, destination: as).call
+    def move(file: nil, directory: nil, as:)
+      ::Architecture::Move.new(source: directory || file, destination: destination(as)).call
     end
 
     def create(directory: nil, file: nil, content: nil, context: {})
@@ -42,7 +42,7 @@ module Architecture
     end
 
     def within(source: nil, destination: nil, &block)
-      ::Architecture::DSL.new(source: source(path), destination: destination(path), &block).call
+      ::Architecture::DSL.new(source: source(source), destination: destination(destination), &block).call
     end
 
     def source(path)
