@@ -28,19 +28,23 @@ Using the DSL you can:
 require "architecture/dsl"
 
 architecture source: "old", destination: "new"  do |architect|
-  # Copy a file or directory:
-  architect.copy name: "README.md"
+  # Copy a file:
+  architect.copy file: "README.md"
+
+  # Copy a directory
+  architect.copy directory: "docs"
 
   # Rename a copied file or directory:
-  architect.copy name: "LICENSE", as: "COPYRIGHT"
+  architect.copy file: "LICENSE", as: "COPYRIGHT"
+  architect.copy directory: "test", as: "spec"
 
   # Render a file:
-  # - old/applicaiton.rb
+  # # old/applicaiton.rb
   # module {{module}}
   #
   # end
-  architect.copy name: "app.rb", context: { module: "Foobar" }
-  # - new/application.rb
+  architect.copy file: "app.rb", context: { module: "Foobar" }
+  #>  create new/application.rb
   # module Foobar
   #
   # end
@@ -57,25 +61,31 @@ architecture source: "old", destination: "new"  do |architect|
 
   # Anything with the `file` or `directory` keyword might need scoping:
   architect.create file: architect.source("app.rb")
-  # - old/application.rb
+  #>  create old/application.rb
+  # Create requires a path context, with destination() and source()
 
   architect.delete file: architect.destiantion("app.rb")
   # - new/app.rb
 
   # Move a file or directory:
   architect.move name: architect.destination("app.rb"), as: architect.destination("app.rb")
+  # Move requires a path context, with destination() and source()
 
   # Write over a file:
   architect.overwrite file: architect.destination("app.rb"), content: "\n"
+  # Overwrite requires a path context, with destination() and source()
 
   # Append text to a file:
   architect.append file: architect.destination("app.rb"), content: "end"
+  # Append requires a path context, with destination() and source()
 
   # Prepend text to a file:
   architect.prepend file: architect.destination("app.rb"), content: "class Foobaz"
+  # Prepend requires a path context, with destination() and source()
 
   # Replace content in a file:
   architect.replace file: architect.destination("app.rb"), search: /Foobaz/, content: "Foobar"
+  # Replace requires a path context, with destination() and source()
 
   # Change the context of a series of commands:
   architect.within source: File.join("lib", "foobar"), destination: File.join("lib", "foozball") do |scope|
@@ -117,6 +127,10 @@ Contributing
 Changelog
 =========
 
+  - 5.1.0:
+    * Making the `copy` & `move` dsl methods use the same file/directory syntax
+    * Updating the readme documentation to match the new scoping rules
+    * Fixing a problem with within not using the right argument name
   - 5.0.0: Making the private methods public, a fix for when we went to scoped.
   - 4.0.0: Making each block have a scope object.
   - 3.0.0: Removing the `architecture` method from `Object`
