@@ -126,6 +126,9 @@ Contributing
 Changelog
 =========
 
+  - 5.1.1:
+    * The `create` dsl method now defaults to as, then file/directory.
+    * `move` no longer path scopes the `as:` value.
   - 5.1.0:
     * Making the `copy` & `move` dsl methods use the same file/directory syntax
     * Updating the readme documentation to match the new scoping rules

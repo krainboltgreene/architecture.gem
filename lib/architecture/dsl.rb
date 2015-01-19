@@ -9,12 +9,12 @@ module Architecture
       yield(self)
     end
 
-    def copy(file: nil, directory: nil, as: name, context: {})
-      ::Architecture::Copy.new(source: source(directory || file), destination: destination(as), context: context).call
+    def copy(file: nil, directory: nil, as: nil, context: {})
+      ::Architecture::Copy.new(source: source(directory || file), destination: destination(as || directory || file), context: context).call
     end
 
     def move(file: nil, directory: nil, as:)
-      ::Architecture::Move.new(source: directory || file, destination: destination(as)).call
+      ::Architecture::Move.new(source: directory || file, destination: as).call
     end
 
     def create(directory: nil, file: nil, content: nil, context: {})
