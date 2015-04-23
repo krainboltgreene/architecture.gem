@@ -1,34 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
+    <title>architecture.gem by krainboltgreene</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <title>Architect by krainboltgreene</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Architect</h1>
-        <h2>Architect is a library for scaffolding methods</h2>
-        <a href="https://github.com/krainboltgreene/architecture.gem" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">architecture.gem</h1>
+      <h2 class="project-tagline">architecture.gem is a filesystem library for easy scaffold generator creation</h2>
+      <a href="https://github.com/krainboltgreene/architecture.gem" class="btn">View on GitHub</a>
+      <a href="https://github.com/krainboltgreene/architecture.gem/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/krainboltgreene/architecture.gem/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <ul>
+    <section class="main-content">
+      <ul>
 <li><a href="https://codeclimate.com/github/krainboltgreene/architecture.gem"><img src="http://img.shields.io/codeclimate/github/krainboltgreene/architecture.gem.svg?style=flat-square" alt="Quality"></a></li>
 <li><a href="https://codeclimate.com/github/krainboltgreene/architecture.gem"><img src="http://img.shields.io/codeclimate/coverage/github/krainboltgreene/architecture.gem.svg?style=flat-square" alt="Coverage"></a></li>
 <li><a href="https://travis-ci.org/krainboltgreene/architecture.gem"><img src="http://img.shields.io/travis-ci/krainboltgreene/architecture.gem.svg?style=flat-square" alt="Build"></a></li>
@@ -51,56 +42,56 @@ and thor.</p>
 
 <p>Using the DSL you can:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="pl-k">require</span> <span class="pl-s1"><span class="pl-pds">"</span>architecture/dsl<span class="pl-pds">"</span></span>
+<div class="highlight highlight-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">"</span>architecture/dsl<span class="pl-pds">"</span></span>
 
-architecture <span class="pl-c1">source:</span> <span class="pl-s1"><span class="pl-pds">"</span>old<span class="pl-pds">"</span></span>, <span class="pl-c1">destination:</span> <span class="pl-s1"><span class="pl-pds">"</span>new<span class="pl-pds">"</span></span>  <span class="pl-k">do</span>
+architecture <span class="pl-c1">source:</span> <span class="pl-s"><span class="pl-pds">"</span>old<span class="pl-pds">"</span></span>, <span class="pl-c1">destination:</span> <span class="pl-s"><span class="pl-pds">"</span>new<span class="pl-pds">"</span></span>  <span class="pl-k">do</span>
   <span class="pl-c"># Copy a file or directory:</span>
-  copy <span class="pl-c1">name:</span> <span class="pl-s1"><span class="pl-pds">"</span>README.md<span class="pl-pds">"</span></span>
+  copy <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>README.md<span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Rename a copied file or directory:</span>
-  copy <span class="pl-c1">name:</span> <span class="pl-s1"><span class="pl-pds">"</span>LICENSE<span class="pl-pds">"</span></span>, <span class="pl-c1">as:</span> <span class="pl-s1"><span class="pl-pds">"</span>COPYRIGHT<span class="pl-pds">"</span></span>
+  copy <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>LICENSE<span class="pl-pds">"</span></span>, <span class="pl-c1">as:</span> <span class="pl-s"><span class="pl-pds">"</span>COPYRIGHT<span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Render a file:</span>
   <span class="pl-c"># - old/applicaiton.rb</span>
   <span class="pl-c"># module {{module}}</span>
   <span class="pl-c">#</span>
   <span class="pl-c"># end</span>
-  copy <span class="pl-c1">name:</span> <span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">context:</span> { <span class="pl-c1">module:</span> <span class="pl-s1"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span> }
+  copy <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">context:</span> { <span class="pl-c1">module:</span> <span class="pl-s"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span> }
   <span class="pl-c"># - new/application.rb</span>
   <span class="pl-c"># module Foobar</span>
   <span class="pl-c">#</span>
   <span class="pl-c"># end</span>
 
   <span class="pl-c"># Delete a file or directory:</span>
-  delete <span class="pl-c1">path:</span> <span class="pl-s1"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>
+  delete <span class="pl-c1">path:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Create a file or directory:</span>
-  create <span class="pl-c1">path:</span> <span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>
+  create <span class="pl-c1">path:</span> <span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Anything with the `path` keyword might need scoping:</span>
-  create <span class="pl-c1">path:</span> source(<span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>)
+  create <span class="pl-c1">path:</span> source(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>)
   <span class="pl-c"># - old/application.rb</span>
 
-  delete <span class="pl-c1">path:</span> destiantion(<span class="pl-s1"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>)
+  delete <span class="pl-c1">path:</span> destiantion(<span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>)
   <span class="pl-c"># - new/app.rb</span>
 
   <span class="pl-c"># Move a file or directory:</span>
-  move <span class="pl-c1">path:</span> destination(<span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">as:</span> destination(<span class="pl-s1"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>)
+  move <span class="pl-c1">path:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">as:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>)
   <span class="pl-c"># Write over a file:</span>
-  overwrite <span class="pl-c1">source:</span> destination(<span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>
+  overwrite <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Append text to a file:</span>
-  append <span class="pl-c1">source:</span> destination(<span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s1"><span class="pl-pds">"</span>end<span class="pl-pds">"</span></span>
+  append <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>end<span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Prepend text to a file:</span>
-  <span class="pl-k">prepend</span> <span class="pl-c1">source:</span> destination(<span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s1"><span class="pl-pds">"</span>class Foobaz<span class="pl-pds">"</span></span>
+  <span class="pl-k">prepend</span> <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>class Foobaz<span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Replace content in a file:</span>
-  replace <span class="pl-c1">source:</span> destination(<span class="pl-s1"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">search:</span> <span class="pl-sr"><span class="pl-pds">/</span>Foobaz<span class="pl-pds">/</span></span>, <span class="pl-c1">content:</span> <span class="pl-s1"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span>
+  replace <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">search:</span> <span class="pl-sr"><span class="pl-pds">/</span>Foobaz<span class="pl-pds">/</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span>
 
   <span class="pl-c"># Change the context of a series of commands:</span>
-  within <span class="pl-c1">source:</span> <span class="pl-s3">File</span>.join(<span class="pl-s1"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>foobar<span class="pl-pds">"</span></span>) <span class="pl-k">do</span>
-    create <span class="pl-c1">name:</span> <span class="pl-s1"><span class="pl-pds">"</span>version.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s1"><span class="pl-pds">"</span>VERSION = 1.0.0<span class="pl-pds">"</span></span>
+  within <span class="pl-c1">source:</span> <span class="pl-c1">File</span>.join(<span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>foobar<span class="pl-pds">"</span></span>) <span class="pl-k">do</span>
+    create <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>version.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>VERSION = 1.0.0<span class="pl-pds">"</span></span>
   <span class="pl-k">end</span>
 <span class="pl-k">end</span></pre></div>
 
@@ -180,25 +171,26 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/krainboltgreene/architecture.gem/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/krainboltgreene/architecture.gem/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/krainboltgreene/architecture.gem">architecture.gem</a> is maintained by <a href="https://github.com/krainboltgreene">krainboltgreene</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/krainboltgreene/architecture.gem"></a> is maintained by <a href="https://github.com/krainboltgreene">krainboltgreene</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
-  
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-18715035-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
+
