@@ -2,9 +2,11 @@ require "architecture"
 
 module Architecture
   class DSL
-    def initialize(source:, destination:)
+    def initialize(source:, destination:, output: STDOUT, level: 0)
       @source = source
       @destination = destination
+      @output = output
+      @level = level
 
       yield(self)
     end
@@ -53,8 +55,8 @@ module Architecture
       join(@destination, path)
     end
 
-    private def join(*paths)
-      ::File.join(*paths)
+    private def indentention
+      "\t" * @level
     end
   end
 end
