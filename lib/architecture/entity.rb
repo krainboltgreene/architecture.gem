@@ -53,6 +53,10 @@ module Architecture
       type(engine: engine) == DIRECTORY_MIMETYPE
     end
 
+    def to_s
+      "{#{path}}"
+    end
+
     private def path
       @path
     end
