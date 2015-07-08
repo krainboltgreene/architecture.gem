@@ -3,8 +3,10 @@ module Architecture
     DIRECTORY_MIMETYPE = "application/x-directory"
     DEFAULT_ENGINE = ::File
 
-    def initialize(path:)
-      @path = path
+    def initialize(id:, prefix:)
+      @id = id
+      @prefix = prefix
+      @path = ::File.join(@prefix, @id)
     end
 
     def location(engine: DEFAULT_ENGINE)
