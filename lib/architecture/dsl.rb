@@ -22,7 +22,7 @@ module Architecture
       @output.puts(" succeeded.")
 
       if block_given? && directory
-        within(directory: directory)
+        within(directory: directory, &block)
       end
     end
 
@@ -37,7 +37,7 @@ module Architecture
       @output.puts(" succeeded.")
 
       if block_given? && directory
-        within(directory: directory)
+        within(directory: directory, &block)
       end
     end
 
@@ -51,7 +51,7 @@ module Architecture
       @output.puts(" succeeded.")
 
       if block_given? && directory
-        within(directory: directory)
+        within(directory: directory, &block)
       end
     end
 
