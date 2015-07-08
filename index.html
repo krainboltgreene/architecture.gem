@@ -34,8 +34,7 @@
 
 <p>Architecture is a library that makes scaffolding and file manipulation easy. It gives you a programatic interface and DSL for creating, copying, moving, "rendering", &amp; deleting files and directories.</p>
 
-<p>Architecture's main goal is to become the library of choice for gems like rake
-and thor.</p>
+<p>Architecture's main goal is to become the library of choice for gems like rake and thor.</p>
 
 <h1>
 <a id="using" class="anchor" href="#using" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using</h1>
@@ -44,55 +43,111 @@ and thor.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">"</span>architecture/dsl<span class="pl-pds">"</span></span>
 
-architecture <span class="pl-c1">source:</span> <span class="pl-s"><span class="pl-pds">"</span>old<span class="pl-pds">"</span></span>, <span class="pl-c1">destination:</span> <span class="pl-s"><span class="pl-pds">"</span>new<span class="pl-pds">"</span></span>  <span class="pl-k">do</span>
-  <span class="pl-c"># Copy a file or directory:</span>
-  copy <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>README.md<span class="pl-pds">"</span></span>
+architecture <span class="pl-c1">source:</span> <span class="pl-s"><span class="pl-pds">"</span>old<span class="pl-pds">"</span></span>, <span class="pl-c1">destination:</span> <span class="pl-s"><span class="pl-pds">"</span>new<span class="pl-pds">"</span></span>  <span class="pl-k">do </span>|<span class="pl-smi">arc</span>|
+  <span class="pl-c"># Filesystem transactions here, see below</span>
+<span class="pl-k">end</span></pre></div>
 
-  <span class="pl-c"># Rename a copied file or directory:</span>
-  copy <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>LICENSE<span class="pl-pds">"</span></span>, <span class="pl-c1">as:</span> <span class="pl-s"><span class="pl-pds">"</span>COPYRIGHT<span class="pl-pds">"</span></span>
+<p><strong>Copy Operation</strong></p>
 
-  <span class="pl-c"># Render a file:</span>
-  <span class="pl-c"># - old/applicaiton.rb</span>
-  <span class="pl-c"># module {{module}}</span>
-  <span class="pl-c">#</span>
-  <span class="pl-c"># end</span>
-  copy <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">context:</span> { <span class="pl-c1">module:</span> <span class="pl-s"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span> }
-  <span class="pl-c"># - new/application.rb</span>
-  <span class="pl-c"># module Foobar</span>
-  <span class="pl-c">#</span>
-  <span class="pl-c"># end</span>
+<div class="highlight highlight-ruby"><pre><span class="pl-c"># Copy a file OR directory:</span>
+arc.copy <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>README.md<span class="pl-pds">"</span></span>
+arc.copy <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>docs<span class="pl-pds">"</span></span>
 
-  <span class="pl-c"># Delete a file or directory:</span>
-  delete <span class="pl-c1">path:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>
+<span class="pl-c"># Copy over a file OR directory with a new name:</span>
+arc.copy <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>LICENSE<span class="pl-pds">"</span></span>, <span class="pl-c1">as:</span> <span class="pl-s"><span class="pl-pds">"</span>COPYRIGHT<span class="pl-pds">"</span></span>
+arc.copy <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>, <span class="pl-c1">as:</span> <span class="pl-s"><span class="pl-pds">"</span>spec<span class="pl-pds">"</span></span>
 
-  <span class="pl-c"># Create a file or directory:</span>
-  create <span class="pl-c1">path:</span> <span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>
+<span class="pl-c"># Copy over a file with context:</span>
+arc.copy <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">context:</span> { <span class="pl-c1">module:</span> <span class="pl-s"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span> }
 
-  <span class="pl-c"># Anything with the `path` keyword might need scoping:</span>
-  create <span class="pl-c1">path:</span> source(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>)
-  <span class="pl-c"># - old/application.rb</span>
+<span class="pl-c">#&gt; old/applicaiton.rb</span>
+<span class="pl-c"># module {{module}}</span>
+<span class="pl-c">#</span>
+<span class="pl-c"># end</span>
+<span class="pl-c">#</span>
+<span class="pl-c">#&gt; new/application.rb</span>
+<span class="pl-c"># module Foobar</span>
+<span class="pl-c">#</span>
+<span class="pl-c"># end</span></pre></div>
 
-  delete <span class="pl-c1">path:</span> destiantion(<span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>)
-  <span class="pl-c"># - new/app.rb</span>
+<p><strong>Create Operation</strong></p>
 
-  <span class="pl-c"># Move a file or directory:</span>
-  move <span class="pl-c1">path:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">as:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>)
-  <span class="pl-c"># Write over a file:</span>
-  overwrite <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>
+<div class="highlight highlight-ruby"><pre><span class="pl-c"># Create a file OR directory in the destination:</span>
+arc.create <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>
+arc.create <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>
 
-  <span class="pl-c"># Append text to a file:</span>
-  append <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>end<span class="pl-pds">"</span></span>
+<span class="pl-c"># Create a file with content in the destination:</span>
+arc.create <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>Some thing.<span class="pl-pds">"</span></span>
 
-  <span class="pl-c"># Prepend text to a file:</span>
-  <span class="pl-k">prepend</span> <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>class Foobaz<span class="pl-pds">"</span></span>
+<span class="pl-c"># Create a file with some embedded context in the destination:</span>
+arc.create <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>Some {{foo}}.<span class="pl-pds">"</span></span>, <span class="pl-c1">context:</span> { <span class="pl-c1">foo:</span> <span class="pl-s"><span class="pl-pds">"</span>thing.<span class="pl-pds">"</span></span> }
 
-  <span class="pl-c"># Replace content in a file:</span>
-  replace <span class="pl-c1">source:</span> destination(<span class="pl-s"><span class="pl-pds">"</span>application.rb<span class="pl-pds">"</span></span>), <span class="pl-c1">search:</span> <span class="pl-sr"><span class="pl-pds">/</span>Foobaz<span class="pl-pds">/</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span>
+<span class="pl-c"># Create a directory in the destination and work within it:</span>
+arc.create <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span> <span class="pl-k">do </span>|<span class="pl-smi">arc</span>|
+  arc.create <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>project.rb<span class="pl-pds">"</span></span>
+<span class="pl-k">end</span>
 
-  <span class="pl-c"># Change the context of a series of commands:</span>
-  within <span class="pl-c1">source:</span> <span class="pl-c1">File</span>.join(<span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>foobar<span class="pl-pds">"</span></span>) <span class="pl-k">do</span>
-    create <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>version.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>VERSION = 1.0.0<span class="pl-pds">"</span></span>
-  <span class="pl-k">end</span>
+<span class="pl-c"># Create a file OR directory in a specific location:</span>
+arc.create <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> <span class="pl-s"><span class="pl-pds">"</span>/var/logs<span class="pl-pds">"</span></span>
+arc.create <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>output/<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> arc.join(arc.source, <span class="pl-s"><span class="pl-pds">"</span>tmp<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><strong>Delete Operation</strong></p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-c"># Delete a file or directory in the destination:</span>
+arc.delete <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>
+arc.delete <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>app<span class="pl-pds">"</span></span>
+
+<span class="pl-c"># Delete a file OR directory in a specific directory:</span>
+arc.delete <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> <span class="pl-s"><span class="pl-pds">"</span>/var/logs<span class="pl-pds">"</span></span>
+arc.delete <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>output/<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> arc.join(arc.source, <span class="pl-s"><span class="pl-pds">"</span>tmp<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><strong>Move Operation</strong></p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-c"># Move a file or directory:</span>
+arc.move <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">as:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>
+arc.move <span class="pl-c1">directory:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">as:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span></pre></div>
+
+<p><strong>Overwrite Operation</strong></p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-c"># Write over a file:</span>
+arc.overwrite <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>
+
+<span class="pl-c"># Overwrite content in a file in a specific directory:</span>
+arc.overwrite <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> <span class="pl-s"><span class="pl-pds">"</span>/var/logs<span class="pl-pds">"</span></span>
+arc.overwrite <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> arc.join(arc.source, <span class="pl-s"><span class="pl-pds">"</span>logs<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><strong>Append Operation</strong></p>
+
+<div class="highlight highlight-ruby"><pre>arc.append <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>end<span class="pl-pds">"</span></span>
+
+<span class="pl-c"># Append content in a file in a specific directory:</span>
+arc.append <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>+<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> <span class="pl-s"><span class="pl-pds">"</span>/var/logs<span class="pl-pds">"</span></span>
+arc.append <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>+<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> arc.join(arc.source, <span class="pl-s"><span class="pl-pds">"</span>logs<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><strong>Prepend Operation</strong></p>
+
+<div class="highlight highlight-ruby"><pre>arc.<span class="pl-k">prepend</span> <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>class Foobaz<span class="pl-pds">"</span></span>
+
+<span class="pl-c"># Prepend content in a file in a specific directory:</span>
+arc.<span class="pl-k">prepend</span> <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>-<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> <span class="pl-s"><span class="pl-pds">"</span>/var/logs<span class="pl-pds">"</span></span>
+arc.<span class="pl-k">prepend</span> <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>-<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> arc.join(arc.source, <span class="pl-s"><span class="pl-pds">"</span>logs<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><strong>Replace Operation</strong></p>
+
+<div class="highlight highlight-ruby"><pre>arc.replace <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>app.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">search:</span> <span class="pl-sr"><span class="pl-pds">/</span>Foobaz<span class="pl-pds">/</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>Foobar<span class="pl-pds">"</span></span>
+
+<span class="pl-c"># Replace content in a file in a specific directory:</span>
+arc.replace <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">search:</span> <span class="pl-sr"><span class="pl-pds">/</span>a<span class="pl-pds">/</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> <span class="pl-s"><span class="pl-pds">"</span>/var/logs<span class="pl-pds">"</span></span>
+arc.replace <span class="pl-c1">file:</span> <span class="pl-s"><span class="pl-pds">"</span>dev.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">search:</span> <span class="pl-sr"><span class="pl-pds">/</span>a<span class="pl-pds">/</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-c1">location:</span> arc.join(arc.source, <span class="pl-s"><span class="pl-pds">"</span>logs<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><strong>Within Scope</strong></p>
+
+<div class="highlight highlight-ruby"><pre>arc.within <span class="pl-s"><span class="pl-pds">"</span>folder<span class="pl-pds">"</span></span> <span class="pl-k">do </span>|<span class="pl-smi">arc</span>|
+  arc.create <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>version.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>VERSION = 1.0.0<span class="pl-pds">"</span></span>
+<span class="pl-k">end</span>
+
+arc.within <span class="pl-c1">source:</span> <span class="pl-s"><span class="pl-pds">"</span>/var<span class="pl-pds">"</span></span>, <span class="pl-c1">destination:</span> <span class="pl-s"><span class="pl-pds">"</span>/tmp<span class="pl-pds">"</span></span> <span class="pl-k">do </span>|<span class="pl-smi">arc</span>|
+  arc.create <span class="pl-c1">name:</span> <span class="pl-s"><span class="pl-pds">"</span>version.rb<span class="pl-pds">"</span></span>, <span class="pl-c1">content:</span> <span class="pl-s"><span class="pl-pds">"</span>VERSION = 1.0.0<span class="pl-pds">"</span></span>
 <span class="pl-k">end</span></pre></div>
 
 <h1>
@@ -100,7 +155,7 @@ architecture <span class="pl-c1">source:</span> <span class="pl-s"><span class="
 
 <p>Add this line to your application's Gemfile:</p>
 
-<pre><code>gem "architecture", "~&gt; 1.0"
+<pre><code>gem "architecture", "6.0.0"
 </code></pre>
 
 <p>And then execute:</p>
@@ -128,6 +183,49 @@ architecture <span class="pl-c1">source:</span> <span class="pl-s"><span class="
 <a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changelog</h1>
 
 <ul>
+<li>6.0.0:
+
+<ul>
+<li>Added logging for the DSL layer</li>
+<li>Extracted Entity from Transactions</li>
+<li>Added 'within' capability to create/copy/move</li>
+<li>Added a location option for targeted transactions, so things don't need to be scoped</li>
+</ul>
+</li>
+<li>5.2.1: Fixed a bug with <code>within</code> DSL.</li>
+<li>5.2.0:
+
+<ul>
+<li>Finally got around to writing tests for <code>Entity</code>
+</li>
+<li>Fixed a bug where it was reading from an old ivar</li>
+<li>Allowed an engine to be used on an Entity, internally at least</li>
+</ul>
+</li>
+<li>5.1.2: Fixing an issue where path was not set in a Entity.</li>
+<li>5.1.1:
+
+<ul>
+<li>The <code>create</code> dsl method now defaults to as, then file/directory.</li>
+<li>
+<code>move</code> no longer path scopes the <code>as:</code> value.</li>
+</ul>
+</li>
+<li>5.1.0:
+
+<ul>
+<li>Making the <code>copy</code> &amp; <code>move</code> dsl methods use the same file/directory syntax</li>
+<li>Updating the readme documentation to match the new scoping rules</li>
+<li>Fixing a problem with within not using the right argument name</li>
+</ul>
+</li>
+<li>5.0.0: Making the private methods public, a fix for when we went to scoped.</li>
+<li>4.0.0: Making each block have a scope object.</li>
+<li>3.0.0: Removing the <code>architecture</code> method from <code>Object</code>
+</li>
+<li>2.0.1: Added mustache as a runtime, instead of development dependency</li>
+<li>2.0.0: Cleaned up a lot of the DSL api to make it easier to understand.</li>
+<li>1.1.0: Adding the Create functionality (woops)</li>
 <li>1.0.0: Initial release</li>
 </ul>
 
@@ -136,15 +234,17 @@ architecture <span class="pl-c1">source:</span> <span class="pl-s"><span class="
 
 <p>As contributors and maintainers of this project, we pledge to respect all people who contribute through reporting issues, posting feature requests, updating documentation, submitting pull requests or patches, and other activities.</p>
 
-<p>We are committed to making participation in this project a harassment-free experience for everyone, regardless of level of experience, gender, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, age, or religion.</p>
+<p>We are committed to making participation in this project a harassment-free experience for everyone, regardless of level of experience, gender, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, or religion.</p>
 
 <p>Examples of unacceptable behavior by participants include the use of sexual language or imagery, derogatory comments or personal attacks, trolling, public or private harassment, insults, or other unprofessional conduct.</p>
 
 <p>Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. Project maintainers who do not follow the Code of Conduct may be removed from the project team.</p>
 
+<p>This code of conduct applies both within project spaces and in public spaces when an individual is representing the project or its community.</p>
+
 <p>Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by opening an issue or contacting one or more of the project maintainers.</p>
 
-<p>This Code of Conduct is adapted from the <a href="http:contributor-covenant.org">Contributor Covenant</a>, version 1.0.0, available at <a href="http://contributor-covenant.org/version/1/0/0/">http://contributor-covenant.org/version/1/0/0/</a></p>
+<p>This Code of Conduct is adapted from the <a href="http://contributor-covenant.org">Contributor Covenant</a>, version 1.1.0, available at <a href="http://contributor-covenant.org/version/1/1/0/">http://contributor-covenant.org/version/1/1/0/</a></p>
 
 <h1>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
