@@ -112,6 +112,14 @@ module Architecture
       self.class.new(source: source, destination: destination, output: @output, level: @level + 1, &block)
     end
 
+    private def source
+      @source
+    end
+
+    private def destination
+      @destination
+    end
+
     private def join(*ids)
       File.join(*ids)
     end
