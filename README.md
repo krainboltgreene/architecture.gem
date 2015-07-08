@@ -45,7 +45,7 @@ arc.copy directory: "test", as: "spec"
 # Copy over a file with context:
 arc.copy file: "app.rb", context: { module: "Foobar" }
 
-#> old/applicaiton.rb
+#> old/application.rb
 # module {{module}}
 #
 # end
@@ -166,7 +166,7 @@ Installing
 
 Add this line to your application's Gemfile:
 
-    gem "architecture", "6.0.0"
+    gem "architecture", "6.0.1"
 
 And then execute:
 
@@ -191,6 +191,10 @@ Contributing
 Changelog
 =========
 
+  - 6.0.1:
+    - Accidentally forgot to pass the block to create/move/copy, woops
+    - Forgot to define the to_s of entity
+    - Fixing typo in readme
   - 6.0.0:
     * Added logging for the DSL layer
     * Extracted Entity from Transactions
