@@ -15,6 +15,10 @@ module Architecture
   require_relative "architecture/replace"
   require_relative "architecture/version"
 
+  EMPTY_CONTEXT = {}
+  EMPTY_PATTERN = ""
+  EMPTY_CONTENT = ""
+
   private def architecture(source:, destination:, &block)
     ::Architecture::DSL.new(source: source, destination: destination, &block)
   end
