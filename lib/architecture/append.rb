@@ -13,7 +13,7 @@ module Architecture
       if entity.file?
         entity.write(text: data)
       else
-        raise ArgumentError, "Source wasn't a file"
+        raise(ArgumentError, "Source wasn't a file")
       end
     end
 

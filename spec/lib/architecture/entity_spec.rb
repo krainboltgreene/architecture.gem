@@ -42,16 +42,24 @@ RSpec.describe Architecture::Entity do
       entity.file?
     end
 
+    before(:each) do
+      allow(entity).to receive("type").and_return(type)
+    end
+
     context "when path points to a file" do
+      let("type") do
+        "application/x-file"
+      end
       it "returns true" do
-        allow(entity).to receive("type").and_return("application/x-file")
         expect(file?).to be(true)
       end
     end
 
     context "when path points to a directory" do
+      let("type") do
+        "application/x-directory"
+      end
       it "returns false" do
-        allow(entity).to receive("type").and_return("application/x-directory")
         expect(file?).to be(false)
       end
     end
