@@ -1,12 +1,20 @@
 require "spec_helper"
 
 RSpec.describe Architecture::Entity do
+  let("id") do
+    "baz.rb"
+  end
+
+  let("prefix") do
+    "foo/bar"
+  end
+
   let("path") do
-    "foo/bar/baz"
+    "foo/bar/baz.rb"
   end
 
   let("entity") do
-    described_class.new(path: path)
+    described_class.new(id: id, prefix: prefix)
   end
 
   let("engine") do
