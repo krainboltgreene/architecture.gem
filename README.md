@@ -26,72 +26,137 @@ Using the DSL you can:
 ``` ruby
 require "architecture/dsl"
 
-architecture source: "old", destination: "new"  do |architect|
-  # Copy a file:
-  architect.copy file: "README.md"
+architecture source: "old", destination: "new"  do |arc|
+  # Filesystem transactions here, see below
+end
+```
 
-  # Copy a directory
-  architect.copy directory: "docs"
+**Copy Operation**
 
-  # Rename a copied file or directory:
-  architect.copy file: "LICENSE", as: "COPYRIGHT"
-  architect.copy directory: "test", as: "spec"
+``` ruby
+# Copy a file OR directory:
+arc.copy file: "README.md"
+arc.copy directory: "docs"
 
-  # Render a file:
-  # # old/applicaiton.rb
-  # module {{module}}
-  #
-  # end
-  architect.copy file: "app.rb", context: { module: "Foobar" }
-  #>  create new/application.rb
-  # module Foobar
-  #
-  # end
+# Copy over a file OR directory with a new name:
+arc.copy file: "LICENSE", as: "COPYRIGHT"
+arc.copy directory: "test", as: "spec"
 
-  # Delete a file or directory:
-  architect.delete file: "app.rb"
-  architect.delete directory: "app"
+# Copy over a file with context:
+arc.copy file: "app.rb", context: { module: "Foobar" }
 
-  # Create a file:
-  architect.create file: "app.rb", content: "Some {{foo}}.", context: { foo: "Bar" }
+#> old/applicaiton.rb
+# module {{module}}
+#
+# end
+#
+#> new/application.rb
+# module Foobar
+#
+# end
+```
 
-  # Create a directory:
-  architect.create directory: "lib"
 
-  # Anything with the `file` or `directory` keyword might need scoping:
-  architect.create file: architect.source("app.rb")
-  #>  create old/application.rb
-  # Create requires a path context, with destination() and source()
+**Create Operation**
 
-  architect.delete file: architect.destiantion("app.rb")
-  # - new/app.rb
+``` ruby
+# Create a file OR directory in the destination:
+arc.create file: "app.rb"
+arc.create directory: "lib"
 
-  # Move a file or directory:
-  architect.move name: architect.destination("app.rb"), as: architect.destination("app.rb")
-  # Move requires a path context, with destination() and source()
+# Create a file with content in the destination:
+arc.create file: "app.rb", content: "Some thing."
 
-  # Write over a file:
-  architect.overwrite file: architect.destination("app.rb"), content: "\n"
-  # Overwrite requires a path context, with destination() and source()
+# Create a file with some embedded context in the destination:
+arc.create file: "app.rb", content: "Some {{foo}}.", context: { foo: "thing." }
 
-  # Append text to a file:
-  architect.append file: architect.destination("app.rb"), content: "end"
-  # Append requires a path context, with destination() and source()
+# Create a directory in the destination and work within it:
+arc.create directory: "lib" do |arc|
+  arc.create file: "project.rb"
+end
 
-  # Prepend text to a file:
-  architect.prepend file: architect.destination("app.rb"), content: "class Foobaz"
-  # Prepend requires a path context, with destination() and source()
+# Create a file OR directory in a specific location:
+arc.create file: "dev.txt", location: "/var/logs"
+arc.create directory: "output/", location: arc.join(arc.source, "tmp")
+```
 
-  # Replace content in a file:
-  architect.replace file: architect.destination("app.rb"), search: /Foobaz/, content: "Foobar"
-  # Replace requires a path context, with destination() and source()
 
-  # Change the context of a series of commands:
-  architect.within source: File.join("lib", "foobar"), destination: File.join("lib", "foozball") do |scope|
-    # Now architect.source() returns `"old/lib/foobar"`
-    # Now architect.destination() returns `"new/lib/foozball"`
-    scope.create name: "version.rb", content: "VERSION = 1.0.0"
-  end
+**Delete Operation**
+
+``` ruby
+# Delete a file or directory in the destination:
+arc.delete file: "app.rb"
+arc.delete directory: "app"
+
+# Delete a file OR directory in a specific directory:
+arc.delete file: "dev.txt", location: "/var/logs"
+arc.delete directory: "output/", location: arc.join(arc.source, "tmp")
+```
+
+
+**Move Operation**
+
+``` ruby
+# Move a file or directory:
+arc.move file: "app.rb", as: "app.rb"
+arc.move directory: "app.rb", as: "app.rb"
+```
+
+
+**Overwrite Operation**
+
+``` ruby
+# Write over a file:
+arc.overwrite file: "app.rb", content: "\n"
+
+# Overwrite content in a file in a specific directory:
+arc.overwrite file: "dev.txt", content: "\n", location: "/var/logs"
+arc.overwrite file: "dev.txt", content: "\n", location: arc.join(arc.source, "logs")
+```
+
+
+**Append Operation**
+
+``` ruby
+arc.append file: "app.rb", content: "end"
+
+# Append content in a file in a specific directory:
+arc.append file: "dev.txt", content: "+", location: "/var/logs"
+arc.append file: "dev.txt", content: "+", location: arc.join(arc.source, "logs")
+```
+
+
+**Prepend Operation**
+
+``` ruby
+arc.prepend file: "app.rb", content: "class Foobaz"
+
+# Prepend content in a file in a specific directory:
+arc.prepend file: "dev.txt", content: "-", location: "/var/logs"
+arc.prepend file: "dev.txt", content: "-", location: arc.join(arc.source, "logs")
+```
+
+
+**Replace Operation**
+
+``` ruby
+arc.replace file: "app.rb", search: /Foobaz/, content: "Foobar"
+
+# Replace content in a file in a specific directory:
+arc.replace file: "dev.txt", search: /a/, content: "b", location: "/var/logs"
+arc.replace file: "dev.txt", search: /a/, content: "b", location: arc.join(arc.source, "logs")
+```
+
+
+**Within Scope**
+
+``` ruby
+arc.within "folder" do |arc|
+  arc.create name: "version.rb", content: "VERSION = 1.0.0"
+end
+
+arc.within source: "/var", destination: "/tmp" do |arc|
+  arc.create name: "version.rb", content: "VERSION = 1.0.0"
 end
 ```
 
