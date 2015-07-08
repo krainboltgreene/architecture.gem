@@ -166,7 +166,7 @@ Installing
 
 Add this line to your application's Gemfile:
 
-    gem "architecture", "~> 1.0"
+    gem "architecture", "6.0.0"
 
 And then execute:
 
@@ -189,6 +189,12 @@ Contributing
 
 Changelog
 =========
+
+  - 6.0.0:
+    * Added logging for the DSL layer
+    * Extracted Entity from Transactions
+    * Added 'within' capability to create/copy/move
+    * Added a location option for targeted transactions, so things don't need to be scoped
   - 5.2.1: Fixed a bug with `within` DSL.
   - 5.2.0:
     * Finally got around to writing tests for `Entity`
