@@ -107,7 +107,7 @@ module Architecture
     end
 
     def within(directory: nil, source: join(@source, directory), destination: join(@destination, directory), &block)
-      @output.print "#{indentention}Within #{destination}"
+      @output.puts "#{indentention}Within #{destination}"
 
       self.class.new(source: source, destination: destination, output: @output, level: @level + 1, &block)
     end
