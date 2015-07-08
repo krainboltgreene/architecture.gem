@@ -2,8 +2,8 @@ module Architecture
   class Replace
     include Entityable
 
-    def initialize(source:, search: "", content: "")
       @entity = Entity.new(path: source)
+    def initialize(source:, search: Architecture::EMPTY_PATTERN, content: Architecture::EMPTY_CONTENT)
       @search = search
       @content = content
     end
