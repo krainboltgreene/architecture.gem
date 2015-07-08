@@ -166,7 +166,7 @@ Installing
 
 Add this line to your application's Gemfile:
 
-    gem "architecture", "6.0.1"
+    gem "architecture", "6.0.2"
 
 And then execute:
 
@@ -190,6 +190,7 @@ Contributing
 Changelog
 =========
 
+  - 6.0.2: Fixing indentation level of within blocks
   - 6.0.1:
     - Accidentally forgot to pass the block to create/move/copy, woops
     - Forgot to define the to_s of entity
