@@ -3,9 +3,9 @@ module Architecture
     include Replicatable
     include Contentable
 
-    def initialize(source:, destination:, context: {})
       @origin = Entity.new(path: source)
       @clone = Entity.new(path: destination)
+    def initialize(source:, destination:, context: Architecture::EMPTY_CONTEXT)
       @context = context
     end
 

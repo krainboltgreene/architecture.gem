@@ -3,8 +3,8 @@ module Architecture
     include Entityable
     include Contentable
 
-    def initialize(source:, content: "", context: {})
       @entity = Entity.new(path: source)
+    def initialize(source:, content: Architecture::EMPTY_CONTENT, context: Architecture::EMPTY_CONTEXT)
       @content = content
       @context = context
     end
