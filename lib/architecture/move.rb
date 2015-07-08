@@ -3,8 +3,8 @@ module Architecture
     include Replicatable
 
     def initialize(source:, destination:)
-      @origin = Entity.new(path: source)
-      @clone = Entity.new(path: destination)
+      @origin = source
+      @clone = destination
     end
 
     def call

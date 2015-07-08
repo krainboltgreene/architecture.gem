@@ -3,7 +3,7 @@ module Architecture
     include Entityable
 
     def initialize(source:)
-      @entity = Entity.new(path: source)
+      @entity = source
     end
 
     def call
