@@ -151,7 +151,7 @@ arc.replace file: "dev.txt", search: /a/, content: "b", location: arc.join(arc.s
 **Within Scope**
 
 ``` ruby
-arc.within "folder" do |arc|
+arc.within directory: "folder" do |arc|
   arc.create name: "version.rb", content: "VERSION = 1.0.0"
 end
 
@@ -195,7 +195,6 @@ Changelog
   - 6.0.1:
     - Accidentally forgot to pass the block to create/move/copy, woops
     - Forgot to define the to_s of entity
-    - Fixing typo in readme
   - 6.0.0:
     * Added logging for the DSL layer
     * Extracted Entity from Transactions
@@ -203,7 +202,6 @@ Changelog
     * Added a location option for targeted transactions, so things don't need to be scoped
   - 5.2.1: Fixed a bug with `within` DSL.
   - 5.2.0:
-    * Finally got around to writing tests for `Entity`
     * Fixed a bug where it was reading from an old ivar
     * Allowed an engine to be used on an Entity, internally at least
   - 5.1.2: Fixing an issue where path was not set in a Entity.
@@ -212,7 +210,6 @@ Changelog
     * `move` no longer path scopes the `as:` value.
   - 5.1.0:
     * Making the `copy` & `move` dsl methods use the same file/directory syntax
-    * Updating the readme documentation to match the new scoping rules
     * Fixing a problem with within not using the right argument name
   - 5.0.0: Making the private methods public, a fix for when we went to scoped.
   - 4.0.0: Making each block have a scope object.
