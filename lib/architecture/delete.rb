@@ -4,9 +4,7 @@ module Architecture
 
     def initialize(source:)
       @entity = source
-    end
 
-    def call
       entity.delete
     end
   end

@@ -7,9 +7,7 @@ module Architecture
       @origin = source
       @clone = destination
       @context = context
-    end
 
-    def call
       if origin.file? && context.any?
         clone.write(text: data)
       else

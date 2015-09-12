@@ -7,9 +7,7 @@ module Architecture
       @entity = source
       @content = content
       @context = context
-    end
 
-    def call
       if entity.file?
         entity.write(text: data)
       else

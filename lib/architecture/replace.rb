@@ -6,9 +6,7 @@ module Architecture
       @entity = source
       @search = search
       @content = content
-    end
 
-    def call
       if entity.file?
         entity.write(text: content)
       else
