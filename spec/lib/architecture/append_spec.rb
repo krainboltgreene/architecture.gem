@@ -17,10 +17,6 @@ RSpec.describe Architecture::Append do
     {}
   end
 
-  let("append") do
-    described_class.new(source: source, content: content, context: contexts)
-  end
-
   let("file") do
     "start"
   end
@@ -36,19 +32,16 @@ RSpec.describe Architecture::Append do
     allow(append).to receive("entity").and_return(entity)
   end
 
-  describe "#call" do
-    let("call") do
-      append.call
+  describe ".new" do
+    let("append") do
+      described_class.new(source: source, content: content, context: contexts)
     end
 
     context "with a file as source" do
-      before("each") do
-        allow(entity).to receive("file?").and_return(true)
-      end
-
       it "copies the file" do
+        allow(entity).to receive("file?").and_return(true)
         expect(entity).to receive("write").with(text: result)
-        call
+        append
       end
     end
 
@@ -59,12 +52,10 @@ RSpec.describe Architecture::Append do
     end
 
     context "with a directory as source" do
-      before("each") do
-        allow(entity).to receive("file?").and_return(false)
-      end
-
       it "raises an exception" do
-        expect { call }.to raise_exception(ArgumentError, "Source wasn't a file")
+        allow(entity).to receive("file?").and_return(false)
+        expect { append }.to raise_exception(ArgumentError, "Source wasn't a file")
+        append
       end
     end
   end
