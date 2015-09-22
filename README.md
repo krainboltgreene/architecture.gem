@@ -191,33 +191,29 @@ Contributing
 Changelog
 =========
 
-  - 6.0.2: Fixing indentation level of within blocks
-  - 6.0.1:
-    - Accidentally forgot to pass the block to create/move/copy, woops
-    - Forgot to define the to_s of entity
+  - Current
+    * Fixing indentation level of within blocks
   - 6.0.0:
     * Added logging for the DSL layer
     * Extracted Entity from Transactions
     * Added 'within' capability to create/copy/move
     * Added a location option for targeted transactions, so things don't need to be scoped
-  - 5.2.1: Fixed a bug with `within` DSL.
-  - 5.2.0:
-    * Fixed a bug where it was reading from an old ivar
     * Allowed an engine to be used on an Entity, internally at least
-  - 5.1.2: Fixing an issue where path was not set in a Entity.
-  - 5.1.1:
     * The `create` dsl method now defaults to as, then file/directory.
     * `move` no longer path scopes the `as:` value.
-  - 5.1.0:
     * Making the `copy` & `move` dsl methods use the same file/directory syntax
-    * Fixing a problem with within not using the right argument name
-  - 5.0.0: Making the private methods public, a fix for when we went to scoped.
-  - 4.0.0: Making each block have a scope object.
-  - 3.0.0: Removing the `architecture` method from `Object`
-  - 2.0.1: Added mustache as a runtime, instead of development dependency
-  - 2.0.0: Cleaned up a lot of the DSL api to make it easier to understand.
-  - 1.1.0: Adding the Create functionality (woops)
-  - 1.0.0: Initial release
+  - 5.0.0:
+    * Making the private methods public, a fix for when we went to scoped.
+  - 4.0.0:
+    * Making each block have a scope object.
+  - 3.0.0:
+    * Removing the `architecture` method from `Object`
+    * Added mustache as a runtime, instead of development dependency
+  - 2.0.0:
+    * Cleaned up a lot of the DSL api to make it easier to understand.
+    * Adding the Create functionality (woops)
+  - 1.0.0:
+    * Initial release
 
 
 License

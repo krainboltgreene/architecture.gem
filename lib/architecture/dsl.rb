@@ -17,7 +17,7 @@ module Architecture
 
       @output.print("#{indentention}Copying #{a} to #{b}")
 
-      Copy.new(source: a, destination: b, context: context)
+      Copy.new(source: a, destination: b, context: context).call
 
       @output.puts(" succeeded.")
 
@@ -32,7 +32,7 @@ module Architecture
 
       @output.print("#{indentention}Moving #{a} to #{b}")
 
-      Move.new(source: a, destination: b)
+      Move.new(source: a, destination: b).call
 
       @output.puts(" succeeded.")
 
@@ -46,7 +46,7 @@ module Architecture
 
       @output.print("#{indentention}Creating #{a}")
 
-      Create.new(source: a, content: content, context: context)
+      Create.new(source: a, content: content, context: context).call
 
       @output.puts(" succeeded.")
 
@@ -60,7 +60,7 @@ module Architecture
 
       @output.print("#{indentention}Deleting #{a}")
 
-      Delete.new(source: a)
+      Delete.new(source: a).call
 
       @output.puts(" succeeded.")
     end
@@ -70,7 +70,7 @@ module Architecture
 
       @output.print("#{indentention}Replacing content in #{a}")
 
-      Replace.new(source: a, search: search, content: content)
+      Replace.new(source: a, search: search, content: content).call
 
       @output.puts(" succeeded.")
     end
@@ -81,7 +81,7 @@ module Architecture
       @output.print("#{indentention}Prepending #{a} with content")
 
 
-      Prepend.new(source: a, content: content, context: context)
+      Prepend.new(source: a, content: content, context: context).call
 
       @output.puts(" succeeded.")
     end
@@ -91,7 +91,7 @@ module Architecture
 
       @output.print("#{indentention}Appending #{a}")
 
-      Append.new(source: a, content: content, context: context)
+      Append.new(source: a, content: content, context: context).call
 
       @output.puts(" succeeded.")
     end
@@ -101,7 +101,7 @@ module Architecture
 
       @output.print("#{indentention}Appending #{a}")
 
-      Overwrite.new(source: a, content: content, context: context)
+      Overwrite.new(source: a, content: content, context: context).call
 
       @output.puts(" succeeded.")
     end
