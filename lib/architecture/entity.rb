@@ -54,7 +54,7 @@ module Architecture
     end
 
     def to_s
-      "{#{path}}"
+      path
     end
 
     private def path
