@@ -66,7 +66,7 @@ module Architecture
     end
 
     def replace(file:, search:, content:, location: nil)
-      a = Entity.new(id: directory || file, prefix: location || @destination)
+      a = Entity.new(id: file, prefix: location || @destination)
 
       @output.print("#{indentention}Replacing content in #{a}")
 
@@ -76,7 +76,7 @@ module Architecture
     end
 
     def prepend(file:, content:, context: Architecture::EMPTY_CONTEXT, location: nil)
-      a = Entity.new(id: directory || file, prefix: location || @destination)
+      a = Entity.new(id: file, prefix: location || @destination)
 
       @output.print("#{indentention}Prepending #{a} with content")
 
