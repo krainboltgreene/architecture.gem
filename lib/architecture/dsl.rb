@@ -120,7 +120,7 @@ module Architecture
     end
 
     private def truncate(path)
-      path.split("/").last(@level).join("/")
+      path.split("/").last(@level + 1).join("/")
     end
   end
 end
