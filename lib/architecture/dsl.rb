@@ -116,7 +116,7 @@ module Architecture
     end
 
     private def indentention
-      "  - " * @level
+      "  " * @level + "-"
     end
 
     private def truncate(path)
