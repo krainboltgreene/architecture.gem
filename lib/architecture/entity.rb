@@ -66,7 +66,9 @@ module Architecture
     end
 
     private def system(command)
-      `#{command}`
+      Kernel.system("#{command}", :out => "/dev/null").tap do |succeeded|
+        raise "\n`#{command}` failed to work." unless succeeded
+      end
     end
   end
 end
