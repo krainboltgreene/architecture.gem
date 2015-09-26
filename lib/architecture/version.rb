@@ -1,3 +1,3 @@
 module Architecture
-  VERSION = "6.0.4"
+  VERSION = "6.0.5"
 end
