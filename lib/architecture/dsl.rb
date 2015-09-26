@@ -106,14 +106,14 @@ module Architecture
       @output.puts(" succeeded.")
     end
 
-    def within(directory: nil, source: join(@source, directory), destination: join(@destination, directory), &block)
+    def within(directory: nil, source: @source, destination: @destination, &block)
       @output.puts "#{indentention}Within #{destination}"
 
-      self.class.new(source: source, destination: destination, output: @output, level: @level + 1, &block)
+      self.class.new(source: join(@source, source, directory), destination:  join(@destination, destination, directory), output: @output, level: @level + 1, &block)
     end
 
     private def join(*ids)
-      File.join(*ids)
+      File.join(*ids.compact)
     end
 
     private def indentention
