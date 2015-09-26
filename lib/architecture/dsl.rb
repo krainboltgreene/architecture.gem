@@ -15,7 +15,7 @@ module Architecture
       a = Entity.new(id: directory || file, prefix: @source)
       b = Entity.new(id: as || directory || file, prefix: @destination)
 
-      @output.print("#{indentention}Copying #{a} to #{b}")
+      @output.print("#{indentention}Copying #{truncate(a.to_s)} to #{truncate(b.to_s)}")
 
       Copy.new(source: a, destination: b, context: context).call
 
@@ -30,7 +30,7 @@ module Architecture
       a = Entity.new(id: directory || file, prefix: @source)
       b = Entity.new(id: as, prefix: @destination)
 
-      @output.print("#{indentention}Moving #{a} to #{b}")
+      @output.print("#{indentention}Moving #{truncate(a.to_s)} to #{truncate(b.to_s)}")
 
       Move.new(source: a, destination: b).call
 
@@ -44,7 +44,7 @@ module Architecture
     def create(file: nil, directory: nil, content: nil, context: EMPTY_CONTEXT, location: nil, &block)
       a = Entity.new(id: directory || file, prefix: location || @destination)
 
-      @output.print("#{indentention}Creating #{a}")
+      @output.print("#{indentention}Creating #{truncate(a.to_s)}")
 
       Create.new(source: a, content: content, context: context).call
 
@@ -58,7 +58,7 @@ module Architecture
     def delete(directory: nil, file: nil, location: nil)
       a = Entity.new(id: directory || file, prefix: location || @destination)
 
-      @output.print("#{indentention}Deleting #{a}")
+      @output.print("#{indentention}Deleting #{truncate(a.to_s)}")
 
       Delete.new(source: a).call
 
@@ -68,7 +68,7 @@ module Architecture
     def replace(file:, search:, content:, location: nil)
       a = Entity.new(id: file, prefix: location || @destination)
 
-      @output.print("#{indentention}Replacing content in #{a}")
+      @output.print("#{indentention}Replacing content in #{truncate(a.to_s)}")
 
       Replace.new(source: a, search: search, content: content).call
 
@@ -78,8 +78,7 @@ module Architecture
     def prepend(file:, content:, context: Architecture::EMPTY_CONTEXT, location: nil)
       a = Entity.new(id: file, prefix: location || @destination)
 
-      @output.print("#{indentention}Prepending #{a} with content")
-
+      @output.print("#{indentention}Prepending #{truncate(a.to_s)} with content")
 
       Prepend.new(source: a, content: content, context: context).call
 
@@ -89,7 +88,7 @@ module Architecture
     def append(file:, content:, context: Architecture::EMPTY_CONTEXT, location: nil)
       a = Entity.new(id: directory || file, prefix: location || @destination)
 
-      @output.print("#{indentention}Appending #{a}")
+      @output.print("#{indentention}Appending #{a} with content")
 
       Append.new(source: a, content: content, context: context).call
 
@@ -99,7 +98,7 @@ module Architecture
     def overwrite(file:, content:, context: Architecture::EMPTY_CONTEXT, location: nil)
       a = Entity.new(id: directory || file, prefix: location || @destination)
 
-      @output.print("#{indentention}Appending #{a}")
+      @output.print("#{indentention}Overwriting #{truncate(a.to_s)} with content")
 
       Overwrite.new(source: a, content: content, context: context).call
 
@@ -107,7 +106,7 @@ module Architecture
     end
 
     def within(directory: nil, source: @source, destination: @destination, &block)
-      @output.puts "#{indentention}Within #{join(directory || destination)}"
+      @output.puts "#{indentention}Within #{directory || truncate(destination)}"
 
       self.class.new(source: join(@source, directory || source), destination:  join(@destination, directory || destination), output: @output, level: @level + 1, &block)
     end
@@ -118,6 +117,10 @@ module Architecture
 
     private def indentention
       "\t" * @level
+    end
+
+    private def truncate(path)
+      path.split("/").last(@level).join("/")
     end
   end
 end
