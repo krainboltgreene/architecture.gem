@@ -26,6 +26,8 @@ Using the DSL you can:
 ``` ruby
 require "architecture/dsl"
 
+include Architecture
+
 architecture source: "old", destination: "new"  do |arc|
   # Filesystem transactions here, see below
 end
